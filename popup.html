@@ -2,14 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Universal Highlight Helper</title>
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-  <header>
-    <h1>Highlights</h1>
-  </header>
+  <div class="top-bar">
+    <div class="header-row">
+      <h1>Highlights</h1>
+    </div>
+    <div class="search-row">
+      <input type="search" id="search" placeholder="Search highlights…" autocomplete="off" spellcheck="false" />
+    </div>
+    <div class="toolbar">
+      <button id="btn-clear-all" class="toolbar-btn toolbar-danger">Clear All</button>
+      <button id="btn-export-json" class="toolbar-btn">Export JSON</button>
+      <button id="btn-export-csv" class="toolbar-btn">Export CSV</button>
+    </div>
+  </div>
   <main id="highlights-list"></main>
   <script src="popup.js"></script>
 </body>
