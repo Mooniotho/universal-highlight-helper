@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Universal Highlight Helper",
+  "version": "0.1.0",
+  "description": "Save, view, and manage text highlights from any webpage.",
+  "permissions": ["contextMenus", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Universal Highlight Helper",
+    "default_popup": "popup.html"
+  }
+}
