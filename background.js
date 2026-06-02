@@ -14,7 +14,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     text: info.selectionText,
     url: tab.url,
     pageTitle: tab.title,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    tag: "Other"
   };
 
   console.log("[UHH] Highlight captured:", highlight);

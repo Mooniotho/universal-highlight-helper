@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Universal Highlight Helper</title>
   <link rel="stylesheet" href="popup.css" />
 </head>
@@ -9,14 +10,30 @@
   <div class="top-bar">
     <div class="header-row">
       <h1>Highlights</h1>
+      <select id="sort-select" class="sort-select" title="Sort order">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+        <option value="az">A–Z by title</option>
+      </select>
     </div>
+    <div id="stats-bar" class="stats-bar"></div>
     <div class="search-row">
       <input type="search" id="search" placeholder="Search highlights…" autocomplete="off" spellcheck="false" />
     </div>
+    <div class="tag-filter" id="tag-filter">
+      <button class="tag-pill active" data-tag="All">All</button>
+      <button class="tag-pill tag-pill-starred" data-tag="Starred">★ Starred</button>
+      <button class="tag-pill" data-tag="School">School</button>
+      <button class="tag-pill" data-tag="Work">Work</button>
+      <button class="tag-pill" data-tag="Research">Research</button>
+      <button class="tag-pill" data-tag="Personal">Personal</button>
+      <button class="tag-pill" data-tag="Other">Other</button>
+    </div>
     <div class="toolbar">
-      <button id="btn-clear-all" class="toolbar-btn toolbar-danger">Clear All</button>
+      <button id="btn-import-json" class="toolbar-btn">Import</button>
       <button id="btn-export-json" class="toolbar-btn">Export JSON</button>
       <button id="btn-export-csv" class="toolbar-btn">Export CSV</button>
+      <button id="btn-clear-all" class="toolbar-btn toolbar-danger">Clear All</button>
     </div>
   </div>
   <main id="highlights-list"></main>
