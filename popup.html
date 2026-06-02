@@ -10,11 +10,14 @@
   <div class="top-bar">
     <div class="header-row">
       <h1>Highlights</h1>
-      <select id="sort-select" class="sort-select" title="Sort order">
-        <option value="newest">Newest first</option>
-        <option value="oldest">Oldest first</option>
-        <option value="az">A–Z by title</option>
-      </select>
+      <div class="header-right">
+        <select id="sort-select" class="sort-select" title="Sort order">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="az">A–Z by title</option>
+        </select>
+        <button id="btn-settings" class="btn-settings" title="AI Settings">⚙</button>
+      </div>
     </div>
     <div id="stats-bar" class="stats-bar"></div>
     <div class="search-row">
@@ -37,6 +40,7 @@
     </div>
   </div>
   <main id="highlights-list"></main>
+  <script src="ai-providers.js"></script>
   <script src="ai.js"></script>
   <script src="popup.js"></script>
 </body>

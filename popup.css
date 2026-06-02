@@ -45,6 +45,12 @@ h1 {
   color: #1a1a1a;
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .sort-select {
   font-size: 11px;
   font-weight: 500;
@@ -61,6 +67,23 @@ h1 {
 .sort-select:focus {
   border-color: #4a90d9;
   box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.16);
+}
+
+.btn-settings {
+  font-size: 15px;
+  line-height: 1;
+  background: none;
+  border: none;
+  padding: 3px 5px;
+  border-radius: 5px;
+  color: #8e8e93;
+  cursor: pointer;
+  transition: color 0.1s ease, background 0.1s ease;
+}
+
+.btn-settings:hover {
+  color: #3a3a3c;
+  background: #f0f0f5;
 }
 
 /* ── Stats bar ────────────────────────────────────────────────────────────── */
@@ -580,4 +603,24 @@ h1 {
   font-size: 12px;
   line-height: 1.5;
   color: #4a4a70;
+}
+
+/* ── Open Settings inline button ──────────────────────────────────────────── */
+
+.btn-open-settings {
+  display: inline-block;
+  margin-top: 7px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 6px;
+  border: 1px solid #d0d4f0;
+  background: #eef0fd;
+  color: #3451b2;
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.btn-open-settings:hover {
+  background: #dde2fb;
 }

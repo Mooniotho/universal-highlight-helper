@@ -4,6 +4,12 @@
   "version": "0.1.0",
   "description": "Save, view, and manage text highlights from any webpage.",
   "permissions": ["contextMenus", "storage"],
+  "host_permissions": [
+    "https://api.openai.com/*",
+    "https://api.anthropic.com/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
   "background": {
     "service_worker": "background.js"
   },

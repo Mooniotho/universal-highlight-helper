@@ -250,7 +250,17 @@ async function handleAiAction(btn) {
       copyAiBtn.style.display = "inline-block";
     }
   } catch (err) {
-    contentEl.innerHTML = `<span class="ai-error">Error: ${escapeHtml(err.message || "Something went wrong. Please try again.")}</span>`;
+    if (err.name === "AINotConfiguredError") {
+      contentEl.innerHTML =
+        `No AI provider configured. ` +
+        `<button class="btn-open-settings">Open Settings</button>`;
+    } else {
+      const msg = escapeHtml(err.message || "Something went wrong. Please try again.");
+      const needsSetup = err.message && err.message.includes("Open Settings");
+      contentEl.innerHTML =
+        `<span class="ai-error">${msg}</span>` +
+        (needsSetup ? `<button class="btn-open-settings">Open Settings</button>` : "");
+    }
   } finally {
     allAiBtns.forEach((b) => (b.disabled = false));
   }
@@ -351,6 +361,11 @@ list.addEventListener("click", async (e) => {
     outputEl.innerHTML = "";
     outputEl.style.display = "none";
   }
+
+  const openSettingsBtn = e.target.closest(".btn-open-settings");
+  if (openSettingsBtn) {
+    window.open(chrome.runtime.getURL("settings.html"), "_blank");
+  }
 });
 
 // ── Edit tag (delegated) ───────────────────────────────────────────────────
@@ -437,6 +452,12 @@ document.getElementById("btn-import-json").addEventListener("click", () => {
     reader.readAsText(file);
   });
   input.click();
+});
+
+// ── Settings button ────────────────────────────────────────────────────────
+
+document.getElementById("btn-settings").addEventListener("click", () => {
+  window.open(chrome.runtime.getURL("settings.html"), "_blank");
 });
 
 // ── Init ───────────────────────────────────────────────────────────────────

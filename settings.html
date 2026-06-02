@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings – Universal Highlight Helper</title>
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <div class="page">
+
+    <header class="page-header">
+      <div>
+        <h1>Settings</h1>
+        <p class="subtitle">Universal Highlight Helper</p>
+      </div>
+    </header>
+
+    <!-- Provider selection -->
+    <section class="card">
+      <h2>AI Provider</h2>
+      <p class="section-desc">Choose how AI actions (Summarize, Explain, Flashcards) are powered.</p>
+      <div class="provider-grid">
+
+        <label class="provider-option">
+          <input type="radio" name="provider" value="mock" />
+          <div class="provider-card">
+            <span class="provider-name">Mock</span>
+            <span class="provider-desc">Demo responses, no API key needed</span>
+          </div>
+        </label>
+
+        <label class="provider-option">
+          <input type="radio" name="provider" value="openai" />
+          <div class="provider-card">
+            <span class="provider-name">OpenAI</span>
+            <span class="provider-desc">GPT-4o mini, GPT-4o, and more</span>
+          </div>
+        </label>
+
+        <label class="provider-option">
+          <input type="radio" name="provider" value="anthropic" />
+          <div class="provider-card">
+            <span class="provider-name">Anthropic</span>
+            <span class="provider-desc">Claude Haiku, Sonnet, Opus</span>
+          </div>
+        </label>
+
+        <label class="provider-option">
+          <input type="radio" name="provider" value="ollama" />
+          <div class="provider-card">
+            <span class="provider-name">Ollama</span>
+            <span class="provider-desc">Local models, no internet required</span>
+          </div>
+        </label>
+
+      </div>
+    </section>
+
+    <!-- OpenAI config -->
+    <section class="card provider-config" id="config-openai">
+      <h2>OpenAI Configuration</h2>
+      <div class="field">
+        <label for="openai-key">API Key</label>
+        <div class="input-row">
+          <input type="password" id="openai-key" placeholder="sk-..." autocomplete="off" spellcheck="false" />
+          <button class="btn-toggle-pw" data-target="openai-key" type="button">Show</button>
+        </div>
+        <p class="field-hint">Get your key at <strong>platform.openai.com/api-keys</strong></p>
+      </div>
+      <div class="field">
+        <label for="openai-model">Model</label>
+        <select id="openai-model">
+          <option value="gpt-4o-mini">gpt-4o-mini — fast &amp; cheap (recommended)</option>
+          <option value="gpt-4o">gpt-4o — most capable</option>
+          <option value="gpt-3.5-turbo">gpt-3.5-turbo — legacy</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Anthropic config -->
+    <section class="card provider-config" id="config-anthropic">
+      <h2>Anthropic Configuration</h2>
+      <div class="field">
+        <label for="anthropic-key">API Key</label>
+        <div class="input-row">
+          <input type="password" id="anthropic-key" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
+          <button class="btn-toggle-pw" data-target="anthropic-key" type="button">Show</button>
+        </div>
+        <p class="field-hint">Get your key at <strong>console.anthropic.com/settings/keys</strong></p>
+      </div>
+      <div class="field">
+        <label for="anthropic-model">Model</label>
+        <select id="anthropic-model">
+          <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 — fast &amp; cheap (recommended)</option>
+          <option value="claude-sonnet-4-6">Claude Sonnet 4.6 — balanced</option>
+          <option value="claude-opus-4-8">Claude Opus 4.8 — most capable</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Ollama config -->
+    <section class="card provider-config" id="config-ollama">
+      <h2>Ollama Configuration</h2>
+      <div class="field">
+        <label for="ollama-url">Server URL</label>
+        <input type="text" id="ollama-url" placeholder="http://localhost:11434" spellcheck="false" />
+        <p class="field-hint">Default is <strong>http://localhost:11434</strong>. Ollama must be running.</p>
+      </div>
+      <div class="field">
+        <label for="ollama-model">Model</label>
+        <input type="text" id="ollama-model" placeholder="llama3.2" spellcheck="false" />
+        <p class="field-hint">Run <code>ollama list</code> in your terminal to see installed models.</p>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <div class="actions-bar">
+      <button id="btn-save" class="btn btn-primary">Save Settings</button>
+      <button id="btn-test" class="btn btn-secondary">Test Connection</button>
+      <span id="status-msg" class="status-msg" role="status"></span>
+    </div>
+
+  </div>
+
+  <script src="ai-providers.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
