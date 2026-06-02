@@ -429,3 +429,155 @@ h1 {
   border-color: #4a90d9;
   box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.16);
 }
+
+/* ── AI action buttons ────────────────────────────────────────────────────── */
+
+.ai-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f6;
+}
+
+.btn-ai {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #d0d4f0;
+  background: #eef0fd;
+  color: #3451b2;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: background 0.1s ease;
+}
+
+.btn-ai:hover:not(:disabled) {
+  background: #dde2fb;
+}
+
+.btn-ai:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ── AI output panel ──────────────────────────────────────────────────────── */
+
+.ai-output {
+  margin-top: 8px;
+  padding: 10px 11px;
+  background: #f5f5fc;
+  border: 1px solid #ddddf5;
+  border-radius: 7px;
+}
+
+.ai-output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.ai-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5050a0;
+}
+
+.ai-header-right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-copy-ai {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 5px;
+  border: 1px solid #c8c8e8;
+  background: #eeeef8;
+  color: #3a3a6c;
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.btn-copy-ai:hover:not(:disabled) {
+  background: #e0e0f4;
+}
+
+.btn-copy-ai:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-close-ai {
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 4px;
+  border: none;
+  background: none;
+  color: #9090b0;
+  cursor: pointer;
+  transition: color 0.1s ease, background 0.1s ease;
+}
+
+.btn-close-ai:hover {
+  background: #e8e8f4;
+  color: #3a3a6c;
+}
+
+/* ── AI content ───────────────────────────────────────────────────────────── */
+
+.ai-content {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #2a2a40;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ai-loading {
+  color: #7070a8;
+  font-style: italic;
+  animation: ai-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ai-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1;   }
+}
+
+.ai-error {
+  color: #c0392b;
+  font-style: italic;
+}
+
+/* ── Flashcard layout ─────────────────────────────────────────────────────── */
+
+.flashcard {
+  padding: 7px 0;
+  border-bottom: 1px solid #e5e5f5;
+}
+
+.flashcard:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.fc-q {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #2a2a40;
+  margin-bottom: 3px;
+}
+
+.fc-a {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #4a4a70;
+}

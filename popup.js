@@ -165,6 +165,12 @@ function render(highlights) {
           ${buildTagOptions(tag)}
         </select>
       </div>
+      <div class="ai-actions">
+        <button class="btn btn-ai" data-action="summarize" data-id="${h.id}">Summarize</button>
+        <button class="btn btn-ai" data-action="explain" data-id="${h.id}">Explain</button>
+        <button class="btn btn-ai" data-action="flashcards" data-id="${h.id}">Flashcards</button>
+      </div>
+      <div class="ai-output" id="ai-${h.id}" style="display:none;"></div>
     `;
     list.appendChild(card);
   });
@@ -176,6 +182,78 @@ function loadAndRender() {
     renderStats();
     render(getDisplayed());
   });
+}
+
+// ── AI ─────────────────────────────────────────────────────────────────────
+
+function getLabelForAction(action) {
+  if (action === "summarize")  return "Summary";
+  if (action === "explain")    return "Explanation";
+  if (action === "flashcards") return "Flashcards";
+  return "AI Output";
+}
+
+async function handleAiAction(btn) {
+  const action = btn.dataset.action;
+  const id     = btn.dataset.id;
+
+  const highlight = allHighlights.find((h) => h.id === id);
+  if (!highlight) return;
+
+  const card      = btn.closest(".card");
+  const outputEl  = card.querySelector(".ai-output");
+  const allAiBtns = card.querySelectorAll(".btn-ai");
+
+  outputEl.style.display = "block";
+  outputEl.innerHTML = `
+    <div class="ai-output-header">
+      <span class="ai-label">${getLabelForAction(action)}</span>
+      <div class="ai-header-right">
+        <button class="btn-copy-ai" style="display:none;">Copy</button>
+        <button class="btn-close-ai" title="Dismiss">×</button>
+      </div>
+    </div>
+    <div class="ai-content"><span class="ai-loading">Generating…</span></div>
+  `;
+
+  allAiBtns.forEach((b) => (b.disabled = true));
+
+  const contentEl = outputEl.querySelector(".ai-content");
+  const copyAiBtn = outputEl.querySelector(".btn-copy-ai");
+
+  try {
+    if (action === "summarize") {
+      const result = await summarizeHighlight(highlight.text);
+      contentEl.textContent = result;
+      copyAiBtn.dataset.text = result;
+      copyAiBtn.style.display = "inline-block";
+
+    } else if (action === "explain") {
+      const result = await explainHighlight(highlight.text);
+      contentEl.textContent = result;
+      copyAiBtn.dataset.text = result;
+      copyAiBtn.style.display = "inline-block";
+
+    } else if (action === "flashcards") {
+      const cards = await generateFlashcards(highlight.text);
+      contentEl.innerHTML = cards
+        .map((c, i) => `
+          <div class="flashcard">
+            <p class="fc-q"><strong>Q${i + 1}:</strong> ${escapeHtml(c.q)}</p>
+            <p class="fc-a"><strong>A:</strong> ${escapeHtml(c.a)}</p>
+          </div>
+        `)
+        .join("");
+      copyAiBtn.dataset.text = cards
+        .map((c, i) => `Q${i + 1}: ${c.q}\nA: ${c.a}`)
+        .join("\n\n");
+      copyAiBtn.style.display = "inline-block";
+    }
+  } catch (err) {
+    contentEl.innerHTML = `<span class="ai-error">Error: ${escapeHtml(err.message || "Something went wrong. Please try again.")}</span>`;
+  } finally {
+    allAiBtns.forEach((b) => (b.disabled = false));
+  }
 }
 
 // ── Sort ───────────────────────────────────────────────────────────────────
@@ -205,11 +283,14 @@ searchInput.addEventListener("input", () => {
 
 // ── Card actions (delegated) ───────────────────────────────────────────────
 
-list.addEventListener("click", (e) => {
-  const starBtn   = e.target.closest(".btn-star");
-  const copyBtn   = e.target.closest(".btn-copy");
-  const sourceBtn = e.target.closest(".btn-source");
-  const deleteBtn = e.target.closest(".btn-delete");
+list.addEventListener("click", async (e) => {
+  const starBtn    = e.target.closest(".btn-star");
+  const copyBtn    = e.target.closest(".btn-copy");
+  const sourceBtn  = e.target.closest(".btn-source");
+  const deleteBtn  = e.target.closest(".btn-delete");
+  const aiBtn      = e.target.closest(".btn-ai");
+  const copyAiBtn  = e.target.closest(".btn-copy-ai");
+  const closeAiBtn = e.target.closest(".btn-close-ai");
 
   if (starBtn) {
     const id = starBtn.dataset.id;
@@ -247,6 +328,28 @@ list.addEventListener("click", (e) => {
       const updated = result.highlights.filter((h) => h.id !== id);
       chrome.storage.local.set({ highlights: updated }, loadAndRender);
     });
+  }
+
+  if (aiBtn) {
+    await handleAiAction(aiBtn);
+  }
+
+  if (copyAiBtn) {
+    const text = copyAiBtn.dataset.text || "";
+    navigator.clipboard.writeText(text).then(() => {
+      copyAiBtn.textContent = "Copied!";
+      copyAiBtn.disabled = true;
+      setTimeout(() => {
+        copyAiBtn.textContent = "Copy";
+        copyAiBtn.disabled = false;
+      }, 1500);
+    });
+  }
+
+  if (closeAiBtn) {
+    const outputEl = closeAiBtn.closest(".ai-output");
+    outputEl.innerHTML = "";
+    outputEl.style.display = "none";
   }
 });
 
