@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
+  <div id="app">
   <div class="top-bar">
     <div class="header-row">
       <h1>Highlights</h1>
@@ -20,6 +21,13 @@
       </div>
     </div>
     <div id="stats-bar" class="stats-bar"></div>
+    <div id="sources-bar" class="sources-bar" style="display:none;">
+      <div class="sources-header">
+        <span class="sources-title">Top Sources</span>
+        <button id="btn-clear-source" class="sources-clear-btn" style="display:none;">Clear filter</button>
+      </div>
+      <div id="sources-list" class="sources-list"></div>
+    </div>
     <div class="search-row">
       <input type="search" id="search" placeholder="Search highlights…" autocomplete="off" spellcheck="false" />
     </div>
@@ -40,6 +48,8 @@
     </div>
   </div>
   <main id="highlights-list"></main>
+  </div><!-- #app -->
+  <div id="toast-container" aria-live="polite"></div>
   <script src="ai-providers.js"></script>
   <script src="ai.js"></script>
   <script src="popup.js"></script>

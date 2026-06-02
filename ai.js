@@ -20,16 +20,13 @@ async function _mockSummarize(text) {
   );
 }
 
-async function _mockExplain(text) {
+async function _mockAsk(text, question) {
   await _sleep(_AI_DELAY_MS);
-  const term = _keyTerm(text);
+  const snip = _excerpt(text, 80);
   return (
-    `Passage:\n"${_excerpt(text, 85)}"\n\n` +
-    `Explanation:\n` +
-    `• "${term}" is a key term introduced in this passage.\n` +
-    `• The text likely comes from a longer article — surrounding context matters.\n` +
-    `• The language suggests a formal or informational register.\n` +
-    `• To fully interpret this, consider the source page and surrounding paragraphs.\n\n` +
+    `Question: "${question}"\n\n` +
+    `Based on the highlighted text:\n"${snip}"\n\n` +
+    `Answer: This is a demonstration response. With a real AI provider, you would receive a direct answer to your question using only the highlighted text as context.\n\n` +
     `── Mock response. Open Settings to connect a real AI provider.`
   );
 }
@@ -76,14 +73,14 @@ async function summarizeHighlight(text) {
   );
 }
 
-async function explainHighlight(text) {
+async function askHighlightQuestion(text, question) {
   const s = await AI_PROVIDERS.getSettings();
   if (!s.aiProvider) throw new AINotConfiguredError();
-  if (s.aiProvider === "mock") return _mockExplain(text);
+  if (s.aiProvider === "mock") return _mockAsk(text, question);
 
   return AI_PROVIDERS.call(
-    `Explain the following text clearly. Break down complex terms or concepts where helpful:\n\n"${text}"`,
-    "You are a helpful assistant that explains concepts clearly and precisely."
+    `Highlight text:\n"${text}"\n\nQuestion: ${question}`,
+    "You are a helpful assistant. Answer the user's question based ONLY on the provided highlight text. Be direct and concise."
   );
 }
 
